@@ -102,3 +102,124 @@ for i in range(0,len(temp_id)):
         toWrite.write(str(values[i]))     
 
     toWrite.write('\n')
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+#Write Survival file
+data = parse('./GSE9576_family.soft')
+
+#list of headers of channel info/columns
+survivalHeaderList = ["ArrayId", "time", "status"]
+
+#prefix/type of input of the column
+survivalHeaderPre = ["", "", ""]
+
+#declare channel vairables
+channelNum = ""
+channel = ""
+
+#whether keys has been added to the dictionary
+headerAdded = False
+
+#the dictionary; contains all the info
+survival_info = {}
+survival_info["ArrayId"] = []
+survival_info["time"] = []
+survival_info["status"] = []
+
+#declare as empty
+sampleID = ""
+for line in data:
+    
+    #add GSM to ArrayId
+    if "^SAMPLE" in line:
+        GSM = line.split(" = ")
+        if GSM[1] != sampleID:
+            sampleID = GSM[1]
+            survival_info["ArrayId"].append(GSM[1].strip("\n"))
+            
+    #get the channel index
+    if "!Sample_channel_count" in line:
+        temp = line.strip("!Sample_channel_count = ")
+        channelNum = temp.strip("\n")
+        channel = "_ch"+channelNum
+        
+        #lines after are with _ch#
+        while True:
+            l = next(data)
+            
+            #break out when line does not contain _ch#
+            if not channel in l:
+                headerAdded = True
+                break
+            
+            #get the header/key
+            l = l.split(" = ")
+            titles = l[0].replace("!Sample_","")
+            titles = titles.replace(channel, "")
+            title = titles.replace("_", " ")
+            
+            #if : exists in the second part, the substring before : is header
+            #and after is the value
+            if ":" in l[1]:
+                titles = l[1].split(": ")
+                title = titles[0]
+                l[1] = titles[1]
+            
+            #if header has not been added, add to dictionary, check its type (char or number)
+            #and append to the prefix list
+            if headerAdded == False:
+                try:
+                    n = int(l[1])
+                    survivalHeaderPre.append("n ")
+                except ValueError:
+                    survivalHeaderPre.append("c ")
+                survivalHeaderList.append(title)
+                survival_info[title] = [l[1].strip("\n")]
+            else:
+                #append if key already defined
+                survival_info[title].append(l[1].strip("\n"))
+
+survival = open("survival.txt", "w")
+i = 0
+length = len(survivalHeaderList)
+survivalHeader = ""
+
+#write header
+for i in range(length):
+    #no tab after the last header
+    if i == length-1:
+        survivalHeader = survivalHeader + survivalHeaderPre[i] + survivalHeaderList[i]
+    else:
+        survivalHeader = survivalHeader + survivalHeaderPre[i] + survivalHeaderList[i] + "\t"
+survivalHeader = survivalHeader + "\n"
+survival.write(survivalHeader)
+
+#write body
+i = 0
+length = len(survival_info["ArrayId"])
+for i in range(length):
+    #a line
+    aTuple = []
+    for t in survivalHeaderList:
+        #if no value is added to the column, append empty string
+        if len(survival_info[t]) == 0:
+            aTuple.append("")
+        #else append to dictionary
+        else:
+            aTuple.append(survival_info[t][i])
+    #write a line
+    survival.write("\t".join([str(s) for s in aTuple]))
+    survival.write("\n")
+    
+#close file
+survival.close()
+
