@@ -117,10 +117,10 @@ for i in range(0,len(temp_id)):
 data = parse('./GSE9576_family.soft')
 
 #list of headers of channel info/columns
-survivalHeaderList = ["ArrayId", "time", "status"]
+survivalHeaderList = ["ArrayId", "time", "status", "series"]
 
 #prefix/type of input of the column
-survivalHeaderPre = ["", "", ""]
+survivalHeaderPre = ["", "", "", "c "]
 
 #declare channel vairables
 channelNum = ""
@@ -134,12 +134,13 @@ survival_info = {}
 survival_info["ArrayId"] = []
 survival_info["time"] = []
 survival_info["status"] = []
+survival_info["series"] = []
 
 #declare as empty
 sampleID = ""
 for line in data:
     
-    #add GSM to ArrayId
+    #add GSM to ArrayId; might need to insert some lines into the integrated code
     if "^SAMPLE" in line:
         GSM = line.split(" = ")
         if GSM[1] != sampleID:
@@ -187,6 +188,12 @@ for line in data:
             else:
                 #append if key already defined
                 survival_info[title].append(l[1].strip("\n"))
+                
+    #find GSE id
+    if "!Sample_series_id" in line:
+        series_id = line.replace("!Sample_series_id = ", "")
+        series_id = series_id.strip("\n")
+        survival_info["series"].append(series_id)
 
 survival = open("survival.txt", "w")
 i = 0
@@ -221,5 +228,5 @@ for i in range(length):
     survival.write("\n")
     
 #close file
-survival.close()
-
+survival.close()          
+                
