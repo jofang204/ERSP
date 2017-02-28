@@ -176,11 +176,12 @@ for line in data:
         
         gene_symbol = line[symbol_index]
         gene_title = line[title_index]
+        if gene_symbol == "":
+            gene_symbol = "---"
+        if gene_title == "":
+            gene_title = "---"
 
-        if gene_symbol != "" or gene_title != "":        
-            gene_description[probe_id] = gene_symbol + ": " + gene_title
-        else:
-            gene_description[probe_id] = "..."
+        gene_description[probe_id] = gene_symbol + ": " + gene_title
 
     
     # grabs the expression value
@@ -258,7 +259,7 @@ for i in xrange(len(id_order)):
     name = id_order[i]
     
     # write idx file, record file pointer
-    idx_file.write('\t'.join([name, str(expr_file.tell()), gene_description[name]]))
+    idx_file.write('\t'.join([name, str(expr_file.tell()), gene_description[name].split(":")[0], gene_description[name].split(":")[1]]))
 
     # write probe id and description to expression file
     expr_file.write('\t'.join([name, gene_description[name]]))
