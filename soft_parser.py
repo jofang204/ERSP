@@ -83,16 +83,13 @@ for line in data:
 
         # checks if any common symbol strings are in the header 
         for idx in xrange(len(gene_symbol_strings)):
-            print gene_symbol_strings[idx] 
             if header_strings.has_key(gene_symbol_strings[idx]):
                 symbol_index = header_strings.get(gene_symbol_strings[idx])
-                print symbol_index
 
         # checks if any common title strings are in the header
         for idx in xrange(len(gene_title_strings)):
             if header_strings.has_key(gene_title_strings[idx]):
                 title_index = header_strings.get(gene_title_strings[idx])
-                print title_index
 
         # if no symbol string can be found in header, prompt user to input index 
         # reprompts user until their input is an integer between the header range
@@ -176,7 +173,7 @@ for line in data:
     if descripFlag == True:
         line = line.split('\t')
         probe_id = line[0]   # gets the probe id which is first column
-        # print probeid
+        
         gene_symbol = line[symbol_index]
         gene_title = line[title_index]
 
@@ -256,11 +253,6 @@ idx_file.write(idx_header)
 
 
 # write to expr and idx file
-print len(id_order)
-print len(gene_description)
-print len(array_header)
-print len(clinical_header)
-print len(sampleID)
 for i in xrange(len(id_order)):
     
     name = id_order[i]
