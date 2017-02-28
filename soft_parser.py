@@ -5,7 +5,7 @@
 
 import sys
 import re
-
+import math
 def parse(fname):
     for l in open(fname):
         yield str(l)              
@@ -187,7 +187,7 @@ for line in data:
     # grabs the expression value
     if sampleFlag == True:
         list = re.split(r'\t+', line.rstrip('\t'))
-        temp_values.append(list[1])
+        temp_values.append(math.log(float(list[1]),2))
 
         # keep track of correct order of probe ids that appear in soft file
         if GSM_id_order == True:
