@@ -207,6 +207,11 @@ for line in data:
             if not channel in l:
                 header_added = True
                 break
+
+            if "protocol" in l:
+                continue
+            if "label" in l:
+                continue
             
             #get the header/key
             l = l.split(" = ")
