@@ -66,9 +66,6 @@ def fitstep(arr):
 		m2 = sum2/count2
 		sse = sum1sq + sum2sq
 		sseArray[index] = sse
-		print "bbbbbbbbb"
-		print sse
-		print entry
 	
 	# find the minimum sumsq and its index
 	bestSse = min(sseArray)
