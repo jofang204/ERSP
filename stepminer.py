@@ -97,9 +97,7 @@ def fitstep(arr):
 		else:
 			statistic = (sstot - bestSse)/2/bestSse
 
-	return {"cutoff": bestIndex+1, "bestSse": bestSse, "sstot": sstot, "statistic" : statistic
-			, "mean1" : m1, "mean2" : m2, "threshold": thr, "label:w
-	"label" :label}
+	return {"cutoff": bestIndex+1, "bestSse": bestSse, "sstot": sstot, "statistic" : statistic, "threshold": thr, "label":label}
 
 
 def main():
