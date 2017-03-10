@@ -12,16 +12,20 @@ def meanf(arr):
 def variancef(arr):
 	sq = 0.0
 	m = meanf(arr)
-	for s in arr:
-		sq += (s-m) * (s-m)
-	return sq/len(arr)
+	sumsq = 0
+	for item in arr:
+		sumsq += item**2
+	return (sumsq/len(arr) - m*m)
 
 def stdevf(arr):
 	return variancef(arr) ** 0.5
 
 def msef(arr):
-	var = variancef(arr)
-	return var * len(arr)
+	result = 0
+	mean = meanf(arr)
+	for item in arr:
+		result += (item - mean) ** 2
+	return result
 
 def fitstep(arr):
 	#start = 0		# start and end are indices in arr	
@@ -93,8 +97,9 @@ def fitstep(arr):
 		else:
 			statistic = (sstot - bestSse)/2/bestSse
 
-	return {"cutoff": bestIndex+1, "best squared error": bestSse, "squared error total": sstot, "statistic" : statistic
-			, "mean of first part" : m1, "mean of second part" : m2, "threshold entry": thr, "reversed(1) or not(2)" :label}
+	return {"cutoff": bestIndex+1, "bestSse": bestSse, "sstot": sstot, "statistic" : statistic
+			, "mean1" : m1, "mean2" : m2, "threshold": thr, "label:w
+	"label" :label}
 
 
 def main():
