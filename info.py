@@ -37,7 +37,13 @@ for line in data:
     #mean-thr
     arr.append(mean - thr)
     #perc 
-
+    if (mean < thr):
+    	#dividing number of values between threshold and mean by number of values below threshold
+    	#it's negative because mean is below threshhold
+    	perc = 0 - sum((i > mean) and (i < thr) for i in values[probeid])/(sum((i<thr) for i in values[probeid]))
+    if (mean > thr):
+    	perc = sum((i > mean) and (i < thr) for i in values[probeid])/(sum((i<thr) for i in values[probeid]))
+    arr.append(perc)
     #min
     arr.append(min(values[probeid]))
     #max
