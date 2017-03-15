@@ -6,9 +6,9 @@ def parse(fname):
     for l in open(fname):
         yield str(l)               
 
-data = parse('./GSE9576-expr.txt')
-thr_file = parse('./GSE9576-thr.txt')
-info_file = open("GSE9576-info.txt","w")
+data = parse('jsto-colon-expr.txt')
+thr_file = parse('jsto-colon-thre.txt')
+info_file = open("jsto-colon-info2.txt","w")
 
 next(data)
 
@@ -37,12 +37,12 @@ for line in data:
 	arr.append(name)
 	#thr
 	thr = float(thr_line[1])
-	arr.append(thr)
+	arr.append(round(thr,2))
 	#mean
 	mean = stepminer.meanf(value_line)
-	arr.append(mean)
+	arr.append(round(mean,2))
 	#mean-thr
-	arr.append(mean - thr)
+	arr.append(round(mean - thr,2))
 	#perc 
 	# if (mean < thr):
 	# 	#dividing number of values between threshold and mean by number of values below threshold
@@ -52,18 +52,20 @@ for line in data:
 	# 	perc = sum((i > mean) and (i < thr) for i in values[probeid])/(sum((i<thr) for i in values[probeid]))
 
 	# (# samples below threshold - # samples below mean) / total number of samples
-	perc = (sum((i<thr) for i in value_line) - sum((i<mean) for i in value_line)) / len(value_line)
-
-	arr.append(perc)
+	if mean < thr:
+		perc = float(sum((i<=mean) for i in value_line) - sum((i<=thr) for i in value_line)) / sum((i<=thr) for i in value_line)
+	else:
+		perc = float(sum((i>=thr) for i in value_line) - sum((i>=mean) for i in value_line)) / sum((i>=thr) for i in value_line)
+	arr.append(round(perc,2))
 	#min
-	arr.append(min(value_line))
+	arr.append(round(min(value_line),2))
 	#max
-	arr.append(max(value_line))
+	arr.append(round(max(value_line),2))
 	#sd
-	sd = stepminer.stdevf(value_line)
+	sd = round(stepminer.stdevf(value_line),2)
 	arr.append(sd)
 	#thrNum
-	thrNum = sum(i > thr for i in value_line)
+	thrNum = sum(i < thr for i in value_line)
 	arr.append(thrNum)
 	#hi
 	hi = sum(i > (thr + 0.5) for i in value_line)
@@ -75,7 +77,6 @@ for line in data:
 	lo = sum(i < (thr - 0.5) for i in value_line)
 	arr.append(lo)
 
-	idx +=1
 	info_file.write("\t".join([str(s) for s in arr]))
 	info_file.write("\n")
 
