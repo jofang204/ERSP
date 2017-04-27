@@ -27,21 +27,18 @@ def unwanted(fname, platform):
                 unwantedGSM.append(GSM)
     return unwantedGSM
 
-def goThrough():
+def goThrough(GPL):
     fNames = []
     softFiles = []
     allUnwanted = []
     rootDir = os.getcwd()
-    softFiles = [f for f in os.listdir('.') if os.path.isfile(f)]
-
+    rootDir = rootDir + '/' + GPL
+    for files in os.walk(rootDir):
+        softFiles = files[2]
     for fName in softFiles:
         if 'soft' in fName:
             dFile = rootDir + '/' + fName
             fNames.append(dFile)
-    
-    GPL = rootDir.split('/')
-    GPL = GPL[len(GPL)-1]
-    
     for f in fNames:
         li = unwanted(f, GPL)
         for l in li:
