@@ -5,7 +5,7 @@ running the scripts.
 
 bash normalization.sh  # must be run on hegemon server
 
-python soft_parser.py <path-to-softfile>  # can only add gene name and gene title. Also produces idx file
+python soft_parser.py \<path-to-softfile\>  # can only add gene name and gene title. Also produces idx file
 
 python thre.py
 
