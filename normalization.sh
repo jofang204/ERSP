@@ -4,6 +4,7 @@ raw_dir=./raw/*
 
 for f in $raw_dir
 do
+	echo $f
 	platform=`basename $f`
 	echo $platform
 	python unwanted_list.py $platform > $platform.unwanted 
@@ -19,4 +20,6 @@ do
 	bash scr-rma $platform
 	
 done
+
+
 
