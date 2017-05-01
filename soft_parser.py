@@ -186,62 +186,63 @@ for line in data:
         gene_description[probe_id] = gene_symbol + ": " + gene_title
 
     
-    # # grabs the expression value
-    # if sampleFlag == True:
-    #     list = re.split(r'\t+', line.rstrip('\t'))
-    #     temp_values.append(math.log(float(list[1]),2))
+    # grabs the expression value
+    if sampleFlag == True:
+        list = re.split(r'\t+', line.rstrip('\t'))
+        temp_values.append(math.log(float(list[1]),2))
 
-    #     # keep track of correct order of probe ids that appear in soft file
-    #     if GSM_id_order == True:
-    #         id_order.append(list[0])
+        # keep track of correct order of probe ids that appear in soft file
+        if GSM_id_order == True:
+            id_order.append(list[0])
 
-    # #get the channel index
-    # if "!Sample_channel_count" in line:
+    #get the channel index
+    if "!Sample_channel_count" in line:
 
-    #     temp = line.strip("!Sample_channel_count = ")
-    #     channel_num = temp.strip("\n")
-    #     channel = "_ch"+channel_num
+        temp = line.strip("!Sample_channel_count = ")
+        channel_num = temp.strip("\n")
+        channel = "_ch"+channel_num
     
-    #     #lines after are with _ch#
-    #     while True:
-    #         l = data.next()
+        #lines after are with _ch#
+        while True:
+            l = data.next()
             
-    #         #break out when line does not contain _ch#
-    #         if not channel in l:
-    #             header_added = True
-    #             break
+            #break out when line does not contain _ch#
+            if not channel in l:
+                header_added = True
+                break
 
-    #         if "protocol" in l:
-    #             continue
-    #         if "label" in l:
-    #             continue
+            if "protocol" in l:
+                continue
+            if "label" in l:
+                continue
             
-    #         #get the header/key
-    #         l = l.split(" = ")
-    #         titles = l[0].replace("!Sample_","")
-    #         titles = titles.replace(channel, "")
-    #         title = titles.replace("_", " ")
+            #get the header/key
+            l = l.split(" = ")
+            titles = l[0].replace("!Sample_","")
+            titles = titles.replace(channel, "")
+            title = titles.replace("_", " ")
             
-    #         #if : exists in the second part, the substring before : is header
-    #         #and after is the value
-    #         if ":" in l[1]:
-    #             titles = l[1].split(": ")
-    #             title = titles[0]
-    #             l[1] = titles[1]
+            #if : exists in the second part, the substring before : is header
+            #and after is the value
+            if ":" in l[1]:
+                titles = l[1].split(": ")
+                title = titles[0]
+                l[1] = titles[1]
             
-    #         #if header has not been added, add to dictionary, check its type (char or number)
-    #         #and append to the prefix list
-    #         if header_added == False:
-    #             try:
-    #                 n = int(l[1])
-    #                 survival_header_pre.append("n ")
-    #             except ValueError:
-    #                 survival_header_pre.append("c ")
-    #             survival_header_list.append(title)
-    #             survival_info[title] = [l[1].strip("\n")]
-    #         else:
-    #             #append if key already defined
-    #             survival_info[title].append(l[1].strip("\n"))
+            #if header has not been added, add to dictionary, check its type (char or number)
+            #and append to the prefix list
+            if header_added == False:
+                try:
+                    n = int(l[1])
+                    survival_header_pre.append("n ")
+                except ValueError:
+                    survival_header_pre.append("c ")
+                survival_header_list.append(title)
+            if title not in survival_info:
+                survival_info[title] = [l[1].strip("\n")]
+            else:
+                #append if key already defined
+                survival_info[title].append(l[1].strip("\n"))
 
 # opens files for writing 
 # expr_file = open("GSE9576-expr.txt", 'w+')
@@ -300,51 +301,51 @@ idx_file.close()
 #     expr_file.write('\n')
 #     idx_file.write('\n')
 
-# ## IH WRITING ##
-# ih_header = "ArrayID" + '\t' + "ArrayHeader" + '\t' + "ClinicalHeader"
-# ih_file.write(ih_header)
-# ih_file.write('\n')
+## IH WRITING ##
+ih_header = "ArrayID" + '\t' + "ArrayHeader" + '\t' + "ClinicalHeader"
+ih_file.write(ih_header)
+ih_file.write('\n')
 
-# # write ih file 
-# counter = 0
-# for element in GSM_order:
-#     ih_file.write('\t'.join([element, array_header[counter], clinical_header[counter]]))
-#     ih_file.write('\n')
-#     counter += 1
+# write ih file 
+counter = 0
+for element in GSM_order:
+    ih_file.write('\t'.join([element, array_header[counter], clinical_header[counter]]))
+    ih_file.write('\n')
+    counter += 1
 
-# ih_file.close()
+ih_file.close()
 
-# ### SURVIVAL WRITING ###
-# i = 0
-# length = len(survival_header_list)
-# survival_header = ""
+### SURVIVAL WRITING ###
+i = 0
+length = len(survival_header_list)
+survival_header = ""
 
-# #write header
-# for i in range(length):
-#     #no tab after the last header
-#     if i == length-1:
-#         survival_header = survival_header + survival_header_pre[i] + survival_header_list[i]
-#     else:
-#         survival_header = survival_header + survival_header_pre[i] + survival_header_list[i] + "\t"
-# survival_header = survival_header + "\n"
-# survival.write(survival_header)
+#write header
+for i in range(length):
+    #no tab after the last header
+    if i == length-1:
+        survival_header = survival_header + survival_header_pre[i] + survival_header_list[i]
+    else:
+        survival_header = survival_header + survival_header_pre[i] + survival_header_list[i] + "\t"
+survival_header = survival_header + "\n"
+survival.write(survival_header)
 
-# #write body
-# i = 0
-# length = len(survival_info["ArrayId"])
-# for i in range(length):
-#     #a line
-#     aTuple = []
-#     for t in survival_header_list:
-#         #if no value is added to the column, append empty string
-#         if len(survival_info[t]) == 0:
-#             aTuple.append("")
-#         #else append to dictionary
-#         else:
-#             aTuple.append(survival_info[t][i])
-#     #write a line
-#     survival.write("\t".join([str(s) for s in aTuple]))
-#     survival.write("\n")
+#write body
+i = 0
+length = len(survival_info["ArrayId"])
+for i in range(length):
+    #a line
+    aTuple = []
+    for t in survival_header_list:
+        #if no value is added to the column, append empty string
+        if len(survival_info[t]) == 0:
+            aTuple.append("")
+        #else append to dictionary
+        else:
+            aTuple.append(survival_info[t][i])
+    #write a line
+    survival.write("\t".join([str(s) for s in aTuple]))
+    survival.write("\n")
     
-# survival.close() 
+survival.close() 
 
