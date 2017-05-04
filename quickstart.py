@@ -88,21 +88,20 @@ def main():
   #values2 = result2.get('values2', []) 
 
   ih_file = open("GPL570-ih.txt", 'w')
-
-  if not values: 
-	  print('No data found.')
-  else: 
-		for row in values:
-			"column"
-			for i in xrange(len(row)):
-				if i == 0 or i == 1 or i == 7:
-					if row[i] != "N/A":
-					  ih_file.write(row[i])
-					else:
-						ih_file.write("---")
-				ih_file.write('\t')
-			ih_file.write('\n')
-  ih_file.close()
+  
+  if not values:
+    print('No data found.')
+  else:
+    for row in values:
+      for i in xrange(len(row)):
+        if i == 0 or i == 1 or i ==7:
+          if row[i] != "N/A":
+            ih_file.write(row[i])
+          else:
+            ih_file.write("---")
+          ih_file.write('\t')
+      ih_file.write('\n')
+    ih_file.close()
 	
 if __name__ == '__main__':
   main()
