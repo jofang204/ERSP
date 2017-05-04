@@ -6,9 +6,9 @@ def parse(fname):
     for l in open(fname):
         yield str(l)               
 
-data = parse('GPL570-expr.new.txt')
-thr_file = parse('GPL570-thr.new.txt')
-info_file = open("GPL570-info.new.txt","w")
+data = parse('GPL570-expr.txt')
+thr_file = parse('GPL570-thr.txt')
+info_file = open("GPL570-info.txt","w")
 
 next(data)
 

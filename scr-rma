@@ -2,7 +2,7 @@
 
 RMA="/booleanfs/sahoo/softwares/USF-softwares/affy-apps/rma/rma"
 
-$RMA -o $1-expr.txt \
+$RMA -o $1-norm.txt \
   --rank-list="/booleanfs/sahoo/Data1/GEXC/Affy/golden-u133plus2" \
   -c /booleanfs/sahoo/CDF --cel-list=filelist
 
