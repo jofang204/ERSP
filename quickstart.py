@@ -64,23 +64,21 @@ def main():
                               discoveryServiceUrl=discoveryUrl)
 
     spreadsheetId = '1NQjPVqU991QtFjPAOT1tCV1DwSYT-mGnMihW6UA0rz8'
-    rangeName = 'Class Data!A2:b20'
+    rangeName = 'GPL570!E:O'
     result = service.spreadsheets().values().get(
         spreadsheetId=spreadsheetId, range=rangeName).execute()
     values = result.get('values', [])
 
+    surv_file = open("GPL570-survival.txt", 'w')
+	
     if not values:
         print('No data found.')
     else:
-        print('Platform, Samples, Comments: ')
         for row in values:
-            # Print columns A and E, which correspond to indices 0 and 4.
-            print('%s, %s' % (row[0], row[1]))
-	   # try:
-	#	print('%s' % (row[2]))
-	 #   except IndexError:
-	#	continue
-
+		for i in xrange(len(row)):
+			surv_file.write(row[i])
+		surv_file.write('\n')
+	surv_file.close()
 if __name__ == '__main__':
     main()
 
