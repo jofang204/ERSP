@@ -74,8 +74,6 @@ def main():
         if i >= 0:
           if row[i] != "N/A":
             surv_file.write(row[i])
-          else:
-          	surv_file.write("---")
         surv_file.write('\t')
       surv_file.write('\n')
   
@@ -97,8 +95,6 @@ def main():
         if i == 0 or i == 1 or i == 9:
           if row[i] != "N/A":
             ih_file.write(row[i])
-          else:
-            ih_file.write("---")
           ih_file.write('\t')
       ih_file.write('\n')
     ih_file.close()
