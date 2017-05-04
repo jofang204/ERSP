@@ -57,7 +57,7 @@ def main():
                         discoveryServiceUrl=discoveryUrl)
 
   spreadsheetId = '1NQjPVqU991QtFjPAOT1tCV1DwSYT-mGnMihW6UA0rz8'
-  rangeName = 'GPL570!E:O'
+  rangeName = 'GPL570!D:P'
   result = service.spreadsheets().values().get(
                         spreadsheetId=spreadsheetId, range=rangeName).execute()
   
@@ -71,15 +71,40 @@ def main():
     for row in values:
       "column"
       for i in xrange(len(row)):
-        if row[i] != "N/A":
-          surv_file.write(row[i])
-        else:
-          surv_file.write("---")
+        if i > 0:
+          if row[i] != "N/A":
+            surv_file.write(row[i])
+          else:
+          	surv_file.write("---")
         surv_file.write('\t')
       surv_file.write('\n')
   
   surv_file.close()
 
+  #rangeName2 = ['GPL570!C:E', 'GPL570!K1:K']
+  #result2 = service.spreadsheets().values().batchGet(
+  #                      spreadsheetId=spreadsheetId, ranges=rangeName2).execute()
+  
+  #values2 = result2.get('values2', []) 
+
+  ih_file = open("GPL570-ih.txt", 'w')
+
+  if not values: 
+	  print('No data found.')
+  else: 
+		for row in values:
+			"column"
+			for i in xrange(len(row)):
+				if i == 0 or i == 1 or i == 7:
+					if row[i] != "N/A":
+					  ih_file.write(row[i])
+					else:
+						ih_file.write("---")
+				ih_file.write('\t')
+			ih_file.write('\n')
+  ih_file.close()
+	
 if __name__ == '__main__':
   main()
 
+	
