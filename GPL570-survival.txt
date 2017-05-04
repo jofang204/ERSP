@@ -1,13 +1,4 @@
 	Array ID	Metastasis Site(s)	Sample Site	Tissue Type	Cancer Type	Sample Type	Cell Line/Patient ID	Primary Cancer Characteristics	Cancer Subtype	Patient Age	Patient Sex	Patient Race	
-	GSM354025	Brain	Brain	Lung	Metastasis	Cancer	NCI_U133A_1M	Metastatic	Adenocarcinoma	---	---	---	
-	GSM354026	Brain	Brain	Lung	Metastasis	Cancer	NCI_U133A_2M	Metastatic	Adenocarcinoma	---	---	---	
-	GSM354027	Brain	Brain	Lung	Metastasis	Cancer	NCI_U133A_3M	Metastatic	Adenocarcinoma	---	---	---	
-	GSM354028	Brain	Brain	Lung	Metastasis	Cancer	NCI_U133A_4M	Metastatic	Adenocarcinoma	---	---	---	
-	GSM354029	Brain	Brain	Lung	Metastasis	Cancer	NCI_U133A_5M	Metastatic	Adenocarcinoma	---	---	---	
-	GSM354030	Brain	Brain	Lung	Metastasis	Cancer	NCI_U133A_6M	Metastatic	Adenocarcinoma	---	---	---	
-	GSM354031	Brain	Brain	Lung	Metastasis	Cancer	NCI_U133A_7M	Metastatic	Adenocarcinoma	---	---	---	
-	GSM354032	Brain	Brain	Lung	Metastasis	Cancer	NCI_U133A_8M	Metastatic	Adenocarcinoma	---	---	---	
-	GSM354033	Brain	Brain	Lung	Metastasis	Cancer	NCI_U133A_9M	Metastatic	Adenocarcinoma	---	---	---	
 	GSM354034	Brain	Brain	Lung	Metastasis	Cancer	YX_U133_2_100874T	Metastatic	Adenocarcinoma	---	---	---	
 	GSM354035	Brain	Brain	Lung	Metastasis	Cancer	YX_U133_2_102206T	Metastatic	Adenocarcinoma	---	---	---	
 	GSM354036	Brain	Brain	Lung	Metastasis	Cancer	YX_U133_2_102385T	Metastatic	Adenocarcinoma	---	---	---	
