@@ -57,7 +57,7 @@ def main():
                         discoveryServiceUrl=discoveryUrl)
 
   spreadsheetId = '1NQjPVqU991QtFjPAOT1tCV1DwSYT-mGnMihW6UA0rz8'
-  rangeName = 'GPL570!D:P'
+  rangeName = 'GPL570!D:R'
   result = service.spreadsheets().values().get(
                         spreadsheetId=spreadsheetId, range=rangeName).execute()
   
@@ -71,7 +71,7 @@ def main():
     for row in values:
       "column"
       for i in xrange(len(row)):
-        if i > 0:
+        if i >= 0:
           if row[i] != "N/A":
             surv_file.write(row[i])
           else:
@@ -94,7 +94,7 @@ def main():
   else:
     for row in values:
       for i in xrange(len(row)):
-        if i == 0 or i == 1 or i ==7:
+        if i == 0 or i == 1 or i == 9:
           if row[i] != "N/A":
             ih_file.write(row[i])
           else:
