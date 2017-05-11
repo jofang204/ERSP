@@ -11,7 +11,7 @@ for id in $wanted
 do
 	ls $raw_dir/$id* >> filelist
     baseAddress=ftp://ftp.ncbi.nlm.nih.gov/geo/samples/
-    GSMID=$1
+    GSMID=${id}
     flag=true
 
     for raw_file in `ls $raw_dir`; do
