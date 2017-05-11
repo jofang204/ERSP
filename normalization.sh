@@ -1,11 +1,22 @@
 #!/bin/bash
 
-raw_dir=./raw/GPL570/
+raw_dir=./raw/GPL570
+platform=GPL570
 
 wanted=`tail -n +2 GPL570-ih.txt | cut -f1`
+rm filelist
+touch filelist
 
-for id in wanted:
-	ls $raw_dir/$id
+for id in $wanted
+do
+	ls $raw_dir/$id* >> filelist
+done
+
+bash scr-rma $platform
+soft_touse=`ls ./soft/GPL570/*soft | head -1`
+python soft_parser.py $soft_touse
+python thre.py
+python info.py
 
 # normalization
 # for f in $raw_dir
@@ -38,10 +49,10 @@ for id in wanted:
 # done
 
 # compile into one expr
-# soft_touse=`ls ./soft/GPL570/*soft | head -1`
-# python soft_parser.py $soft_touse
-# python thre.py
-# python info.py
+#soft_touse=`ls ./soft/GPL570/*soft | head -1`
+#python soft_parser.py $soft_touse
+#python thre.py
+#python info.py
 
 
 
