@@ -6,16 +6,20 @@ platform=GPL570
 wanted=`tail -n +2 GPL570-ih.txt | cut -f1`
 rm filelist
 touch filelist
+files=`ls $raw_dir`
+
+# survival and ih
+python quickstart.py
 
 for id in $wanted
 do
-	ls $raw_dir/$id* >> filelist
     baseAddress=ftp://ftp.ncbi.nlm.nih.gov/geo/samples/
     GSMID=${id}
     flag=true
 
-    for raw_file in `ls $raw_dir`; do
-        if [ ${GSMID}.CEL.gz = ${raw_file} ]
+    for raw_file in $files; do
+	cropped_file=$(echo $raw_file |sed -n 's/.*\(GSM[0-9]*\).*/\1/p')
+        if [[ ${GSMID} == ${cropped_file} ]]
         then flag=false
             break
         fi
@@ -28,10 +32,11 @@ do
         webLink=${baseAddress}${GSMDIR}${GSMID}/suppl/${GSMID}.CEL.gz
         wget -O ${raw_dir}/${GSMID}.CEL.gz ${webLink}
     fi
-
-
-
+    
+    ls $raw_dir/$id* >> filelist
+    echo "Done with $id"
 done
+
 
 bash scr-rma $platform
 soft_touse=`ls ./soft/GPL570/*soft | head -1`
