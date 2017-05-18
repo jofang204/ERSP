@@ -5,6 +5,7 @@ nav {
   top: 0;
   background-color: #f0f8ff;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
+
 nav .app-link {
   position: static;
   display: -ms-flexbox;
@@ -15,10 +16,17 @@ nav .app-link {
       align-items: center;
   height: 100%;
   left: 5px; }
+
 nav ul {
     margin-left:50px; }
+
 nav li {
     display: inline;
     list-style-type: none;
     padding-right: 20px;
     margin-right: 20px;}
+
+.website-title{
+  float: right;
+  padding-left: 40%;
+}
