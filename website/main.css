@@ -1,12 +1,12 @@
 nav {
   width: 100%;
   z-index: 1000;
-  height: 70px;
+  height: 60px;
   top: 0;
   background-color: #f0f8ff;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
 
-nav .app-link {
+nav .header {
   position: static;
   display: -ms-flexbox;
   display: flex;
@@ -29,4 +29,12 @@ nav li {
 .website-title{
   float: right;
   padding-left: 40%;
+}
+
+.home{
+  text-align: center;
+}
+
+.about {
+  padding-left: 5%;
 }
