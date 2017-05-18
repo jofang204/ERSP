@@ -6,7 +6,7 @@ nav {
   background-color: #f0f8ff;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); }
 
-nav .app-link {
+nav .header {
   position: static;
   display: -ms-flexbox;
   display: flex;
