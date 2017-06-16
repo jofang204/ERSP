@@ -12,6 +12,7 @@ thr_file = open("GPL570-thr.txt","w")
 next(data)
 values = {}
 
+# use stepminer to compute threshold and statistics
 for line in data:
     line = line.split("\t")
     value_line = line[2:]

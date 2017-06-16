@@ -28,8 +28,6 @@ def msef(arr):
 	return result
 
 def fitstep(arr):
-	#start = 0		# start and end are indices in arr	
-	#end = count - 1
 	sseArray = [0 for i in range(len(arr))] 
 	sum = sumf(arr)
 	mean = meanf(arr)

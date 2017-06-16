@@ -147,19 +147,6 @@ for line in data:
         GSM_id_order = False
         sampleID.update({id_string : temp_values})
 
-    # #find GSE id
-    # elif "!Sample_series_id" in line:
-    #     series_id = line.replace("!Sample_series_id = ", "")
-    #     series_id = series_id.strip("\n")
-    #     survival_info["series"].append(series_id)
-    
-    # # finds clinical header
-    # elif '!Sample_title' in line:
-    #     c_header = line.strip('!Sample_title = ')
-    #     c_header = c_header.strip('\n')
-    #     clinical_header.append(c_header)
-    #     continue
-
     # gets sample id, initialize sampleID dict
     if '^SAMPLE' in line:
         id_string = line.strip('^SAMPLE = ')
@@ -195,67 +182,11 @@ for line in data:
         if GSM_id_order == True:
             id_order.append(list[0])
 
-    # #get the channel index
-    # if "!Sample_channel_count" in line:
-
-    #     temp = line.strip("!Sample_channel_count = ")
-    #     channel_num = temp.strip("\n")
-    #     channel = "_ch"+channel_num
-    
-    #     #lines after are with _ch#
-    #     while True:
-    #         l = data.next()
-            
-    #         #break out when line does not contain _ch#
-    #         if not channel in l:
-    #             header_added = True
-    #             break
-
-    #         if "protocol" in l:
-    #             continue
-    #         if "label" in l:
-    #             continue
-            
-    #         #get the header/key
-    #         l = l.split(" = ")
-    #         titles = l[0].replace("!Sample_","")
-    #         titles = titles.replace(channel, "")
-    #         title = titles.replace("_", " ")
-            
-    #         #if : exists in the second part, the substring before : is header
-    #         #and after is the value
-    #         if ":" in l[1]:
-    #             titles = l[1].split(": ")
-    #             title = titles[0]
-    #             l[1] = titles[1]
-            
-    #         #if header has not been added, add to dictionary, check its type (char or number)
-    #         #and append to the prefix list
-    #         if header_added == False:
-    #             try:
-    #                 n = int(l[1])
-    #                 survival_header_pre.append("n ")
-    #             except ValueError:
-    #                 survival_header_pre.append("c ")
-    #             survival_header_list.append(title)
-    #         if title not in survival_info:
-    #             survival_info[title] = [l[1].strip("\n")]
-    #         else:
-    #             #append if key already defined
-    #             survival_info[title].append(l[1].strip("\n"))
-
 # opens files for writing 
-# expr_file = open("GSE9576-expr.txt", 'w+')
 expr_file = open("./GPL570-expr.txt", "w+") 
 idx_file = open("./GPL570-idx.txt", 'w')
-# survival = open("GSE9576-survival.txt", "w")
-# ih_file = open("GSE9576-ih.txt", 'w')
 
 #### EXPR, IH, and IDX WRITING ####
-# writes header to expression file
-# expr_header = "ProbeID" + '\t' + 'Name' + '\t' + '\t'.join([str(i) for i in sampleID])
-# expr_file.write(expr_header)
-# expr_file.write('\n')
 
 # writes header to idx file
 idx_header = "ProbeID" + '\t' + 'Ptr' + '\t' + "Name" + '\t' + "Description" + '\n'
@@ -263,7 +194,6 @@ idx_file.write(idx_header)
 
 # read and add gene id to normalized expr data
 expr_orig = parse("./GPL570-norm.txt")
-
 for l in expr_orig:
     l = l.rstrip("\n").split("\t")
     if '.txt' in l[0]: # header
@@ -280,72 +210,3 @@ for l in expr_orig:
 
 expr_file.close()
 idx_file.close()
-
-# write to expr and idx file
-# for i in xrange(len(id_order)):
-    
-#     name = id_order[i]
-    
-#     # write idx file, record file pointer
-#     idx_file.write('\t'.join([name, str(expr_file.tell()), gene_description[name].split(":")[0], gene_description[name].split(":")[1]]))
-
-#     # write probe id and description to expression file
-#     expr_file.write('\t'.join([name, gene_description[name]]))
-
-#     # writes each expr value from each GSM
-#     for element in sampleID.items():
-#         values = element[1]
-#         expr_file.write('\t')
-#         expr_file.write(str(values[i]))
-
-#     expr_file.write('\n')
-#     idx_file.write('\n')
-
-# ## IH WRITING ##
-# ih_header = "ArrayID" + '\t' + "ArrayHeader" + '\t' + "ClinicalHeader"
-# ih_file.write(ih_header)
-# ih_file.write('\n')
-
-# # write ih file 
-# counter = 0
-# for element in GSM_order:
-#     ih_file.write('\t'.join([element, array_header[counter], clinical_header[counter]]))
-#     ih_file.write('\n')
-#     counter += 1
-
-# ih_file.close()
-
-# ### SURVIVAL WRITING ###
-# i = 0
-# length = len(survival_header_list)
-# survival_header = ""
-
-# #write header
-# for i in range(length):
-#     #no tab after the last header
-#     if i == length-1:
-#         survival_header = survival_header + survival_header_pre[i] + survival_header_list[i]
-#     else:
-#         survival_header = survival_header + survival_header_pre[i] + survival_header_list[i] + "\t"
-# survival_header = survival_header + "\n"
-# survival.write(survival_header)
-
-# #write body
-# i = 0
-# length = len(survival_info["ArrayId"])
-# for i in range(length):
-#     #a line
-#     aTuple = []
-#     for t in survival_header_list:
-#         #if no value is added to the column, append empty string
-#         if len(survival_info[t]) == 0:
-#             aTuple.append("")
-#         #else append to dictionary
-#         else:
-#             aTuple.append(survival_info[t][i])
-#     #write a line
-#     survival.write("\t".join([str(s) for s in aTuple]))
-#     survival.write("\n")
-    
-# survival.close() 
-
